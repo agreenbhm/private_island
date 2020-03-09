@@ -173,6 +173,8 @@ the sandbox environment. Island never collect data related to your privacy, plea
     <string name="pref_destroy_summary">Remove this Island, together with all apps inside and their data.</string>
     <string name="pref_rescind_title">Rescind</string>
     <string name="pref_rescind_summary">Rescind the privilege on Mainland. All your apps and data will be intact (unfrozen), but you could no longer:\n\n</string>
+    <string name="pref_password_title">Set Password</string>
+    <string name="pref_password_summary">Set a password for the profile.</string>
     <string name="pref_device_owner_title">God mode</string>
     <string name="pref_device_owner_summary">A powerful mode with special privilege granted to Island. If activated, you can:\n\n</string>
     <string name="pref_device_owner_featurs">· Freeze apps in Mainland\n· Supervise app permissions in Mainland(Android 9+)\n· Use some device global features (e.g. full ADB Secure).</string>

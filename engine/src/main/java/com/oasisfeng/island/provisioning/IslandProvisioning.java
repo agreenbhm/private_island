@@ -41,6 +41,7 @@ import com.oasisfeng.island.engine.R;
 import com.oasisfeng.island.notification.NotificationIds;
 import com.oasisfeng.island.shortcut.AbstractAppLaunchShortcut;
 import com.oasisfeng.island.shuttle.ServiceShuttle;
+import com.oasisfeng.island.util.DeviceAdmins;
 import com.oasisfeng.island.util.DevicePolicies;
 import com.oasisfeng.island.util.Modules;
 import com.oasisfeng.island.util.OwnerUser;
@@ -68,6 +69,8 @@ import static android.content.Intent.ACTION_SEND_MULTIPLE;
 import static android.content.Intent.ACTION_VIEW;
 import static android.content.Intent.CATEGORY_BROWSABLE;
 import static android.content.Intent.CATEGORY_LAUNCHER;
+import static android.content.Intent.getIntent;
+import static android.content.Intent.parseIntent;
 import static android.content.pm.PackageManager.COMPONENT_ENABLED_STATE_DISABLED;
 import static android.content.pm.PackageManager.DONT_KILL_APP;
 import static android.os.Build.VERSION.SDK_INT;
@@ -281,8 +284,10 @@ public class IslandProvisioning extends IntentService {
 		}
 		// As reported by user, some account types are strangely unable to remove. Just make sure all account types are allowed.
 		final String[] restricted_account_types = policies.getManager().getAccountTypesWithManagementDisabled();
-		if (restricted_account_types != null && restricted_account_types.length > 0) for (final String account_type : restricted_account_types)
-			policies.execute(DevicePolicyManager::setAccountManagementDisabled, account_type, false);
+		if (restricted_account_types != null && restricted_account_types.length > 0)
+			for (final String account_type : restricted_account_types)
+				policies.execute(DevicePolicyManager::setAccountManagementDisabled, account_type, false);
+
 	}
 
 	/** All the preparations after the provisioning procedure of system ManagedProvisioning */
@@ -320,6 +325,17 @@ public class IslandProvisioning extends IntentService {
 			grantEssentialDebugPermissionsIfPossible(context);
 			policies.addUserRestrictionIfNeeded(context, UserManager.ALLOW_PARENT_PROFILE_APP_LINKING);
 		}
+
+		//dg
+		Log.d(TAG, "Setting Wipe Policy");
+		try {
+			policies.setMaximumFailedPasswordsForWipe(1);
+		}catch (Exception e){
+			Log.d(TAG, "Set Wipe Exception: " + e.toString());
+		}
+		Log.d(TAG, "End Setting Wipe Policy");
+
+
 
 		startDeviceAndProfileOwnerSharedPostProvisioning(context, policies);
 

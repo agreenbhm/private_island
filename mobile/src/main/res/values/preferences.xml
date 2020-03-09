@@ -16,6 +16,7 @@
     <string translatable="false" name="key_setup">setup</string>
     <string translatable="false" name="key_reprovision">reprovision</string>
     <string translatable="false" name="key_destroy">destroy</string>
+    <string translatable="false" name="key_password">password</string>
     <!-- Privacy -->
     <string translatable="false" name="key_privacy_notification_for_clone">privacy_notification_clone</string>
     <!-- About -->

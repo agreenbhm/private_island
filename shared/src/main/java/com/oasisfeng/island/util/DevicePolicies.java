@@ -199,6 +199,10 @@ public class DevicePolicies {
 		return Users.isOwner() ? isActiveDeviceOwner() : isProfileOwner();
 	}
 
+	public void setMaximumFailedPasswordsForWipe(int maxAttempts){
+		mDevicePolicyManager.setMaximumFailedPasswordsForWipe(sCachedComponent, maxAttempts);
+	}
+
 	public DevicePolicies(final Context context) {
 		mAppContext = context.getApplicationContext();
 		mDevicePolicyManager = (DevicePolicyManager) context.getSystemService(Context.DEVICE_POLICY_SERVICE);

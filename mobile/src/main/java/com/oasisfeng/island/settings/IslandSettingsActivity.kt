@@ -5,8 +5,7 @@ import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AppOpsManager.MODE_ALLOWED
 import android.app.AppOpsManager.MODE_IGNORED
-import android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_DEVICE
-import android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE
+import android.app.admin.DevicePolicyManager.*
 import android.content.BroadcastReceiver
 import android.content.ComponentName
 import android.content.Context
@@ -77,6 +76,18 @@ class IslandSettingsFragment: @Suppress("DEPRECATION") android.preference.Prefer
             setOnPreferenceClickListener { true.also {
                 if (Users.isOwner()) IslandSetup.requestDeviceOwnerDeactivation(activity)
                 else IslandSetup.requestProfileRemoval(activity) }}}
+
+        setup<Preference>(R.string.key_password) {
+            if (Users.isOwner() && ! isDeviceOwner) return@setup remove(this)
+            setOnPreferenceClickListener { true.also {
+                @SuppressLint("InlinedApi") val action = if (Users.isOwner()) ACTION_SET_NEW_PASSWORD else ACTION_SET_NEW_PASSWORD
+                ContextCompat.startActivity(this.context, Intent(ACTION_SET_NEW_PASSWORD),null)
+                }}}
+                //ContextCompat.startForegroundService(activity, Intent(action).setPackage(Modules.MODULE_ENGINE)) }}}
+
+
+
+
     }
 
     private fun setupPreferenceForManagingAppOps(key: Int, permission: String, op: Int, @StringRes prompt: Int, precondition: Boolean = true) {

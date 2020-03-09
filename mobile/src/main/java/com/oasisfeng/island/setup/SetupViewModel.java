@@ -3,6 +3,7 @@ package com.oasisfeng.island.setup;
 import android.accounts.Account;
 import android.app.Activity;
 import android.app.Fragment;
+import android.app.admin.DeviceAdminInfo;
 import android.app.admin.DevicePolicyManager;
 import android.content.ActivityNotFoundException;
 import android.content.ComponentName;
@@ -260,6 +261,9 @@ public class SetupViewModel implements Parcelable {
 		if (BuildConfig.DEBUG && SDK_INT >= M)
 			intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_ACCOUNT_TO_MIGRATE, new Account("default_account", "miui_yellowpage"));
 		if (SDK_INT >= O) intent.putExtra(DevicePolicyManager.EXTRA_PROVISIONING_SKIP_USER_CONSENT, true);
+
+
+
 		return intent;
 	}
 
