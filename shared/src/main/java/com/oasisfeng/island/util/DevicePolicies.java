@@ -205,6 +205,14 @@ public class DevicePolicies {
 		mDevicePolicyManager.setMaximumFailedPasswordsForWipe(sCachedComponent, maxAttempts);
 	}
 
+	public int getMaximumFailedPasswordsForWipe(){
+		return mDevicePolicyManager.getMaximumFailedPasswordsForWipe(sCachedComponent);
+	}
+
+	public int getMaximumFailedParentPasswordsForWipe(){
+		DevicePolicyManager parentDevicePolicyManager = mDevicePolicyManager.getParentProfileInstance(sCachedComponent);
+		return parentDevicePolicyManager.getMaximumFailedPasswordsForWipe(sCachedComponent);
+	}
 
 	public void setMaximumFailedParentPasswordsForWipe(int maxAttempts){
 		DevicePolicyManager parentDevicePolicyManager = mDevicePolicyManager.getParentProfileInstance(sCachedComponent);

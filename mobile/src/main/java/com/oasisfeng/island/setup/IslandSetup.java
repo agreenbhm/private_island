@@ -16,6 +16,9 @@ import android.net.Uri;
 import android.os.Process;
 import android.os.UserHandle;
 import android.provider.Settings;
+import android.text.InputType;
+import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.oasisfeng.android.ui.Dialogs;
@@ -216,6 +219,51 @@ public class IslandSetup {
 						deactivateDeviceOwner(activity);
 					}
 				}).show();
+	}
+
+	public static void setFailedPasswordAttempts(final Activity activity) {
+		final EditText failedPasswordAttemptsInput = new EditText(activity);
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT
+		);
+		failedPasswordAttemptsInput.setLayoutParams(lp);
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
+		alertDialog.setView(failedPasswordAttemptsInput);
+		alertDialog.setTitle("Island Password Failures Before Island Wipe");
+		alertDialog.setMessage("0 to disable");
+		failedPasswordAttemptsInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+		failedPasswordAttemptsInput.setMaxLines(1);
+		DevicePolicies dp = new DevicePolicies(activity);
+		failedPasswordAttemptsInput.setText(Integer.toString(dp.getMaximumFailedPasswordsForWipe()));
+
+		alertDialog.setPositiveButton("Save", (d, w) -> {
+			dp.setMaximumFailedPasswordsForWipe(Integer.parseInt(failedPasswordAttemptsInput.getText().toString()));
+		});
+		alertDialog.setNegativeButton("Cancel", null);
+		alertDialog.show();
+	}
+
+	public static void setFailedParentPasswordAttempts(final Activity activity) {
+		final EditText failedPasswordAttemptsInput = new EditText(activity);
+		LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+				LinearLayout.LayoutParams.MATCH_PARENT,
+				LinearLayout.LayoutParams.MATCH_PARENT
+		);
+		failedPasswordAttemptsInput.setLayoutParams(lp);
+		AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
+		alertDialog.setView(failedPasswordAttemptsInput);
+		alertDialog.setTitle("Main Password Failures Before Island Wipe");
+		alertDialog.setMessage("0 to disable");
+		failedPasswordAttemptsInput.setInputType(InputType.TYPE_CLASS_NUMBER);
+		failedPasswordAttemptsInput.setMaxLines(1);
+		DevicePolicies dp = new DevicePolicies(activity);
+		failedPasswordAttemptsInput.setText(Integer.toString(dp.getMaximumFailedParentPasswordsForWipe()));
+		alertDialog.setPositiveButton("Save", (d, w) -> {
+			dp.setMaximumFailedParentPasswordsForWipe(Integer.parseInt(failedPasswordAttemptsInput.getText().toString()));
+		});
+		alertDialog.setNegativeButton("Cancel", null);
+		alertDialog.show();
 	}
 
 	private static void deactivateDeviceOwner(final Activity activity) {

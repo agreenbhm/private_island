@@ -3,6 +3,7 @@ package com.oasisfeng.island.settings
 import android.Manifest.permission.*
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.app.AlertDialog
 import android.app.AppOpsManager.MODE_ALLOWED
 import android.app.AppOpsManager.MODE_IGNORED
 import android.app.admin.DevicePolicyManager.*
@@ -18,7 +19,9 @@ import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.preference.Preference
 import android.preference.TwoStatePreference
+import android.util.Log
 import android.view.MenuItem
+import android.widget.EditText
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import com.oasisfeng.android.ui.Dialogs
@@ -32,6 +35,7 @@ import com.oasisfeng.island.setup.IslandSetup
 import com.oasisfeng.island.util.DevicePolicies
 import com.oasisfeng.island.util.Modules
 import com.oasisfeng.island.util.Users
+import java.lang.Exception
 
 /**
  * Settings for each managed profile, also as launcher activity in managed profile.
@@ -83,11 +87,18 @@ class IslandSettingsFragment: @Suppress("DEPRECATION") android.preference.Prefer
                 @SuppressLint("InlinedApi") val action = if (Users.isOwner()) ACTION_SET_NEW_PASSWORD else ACTION_SET_NEW_PASSWORD
                 ContextCompat.startActivity(this.context, Intent(ACTION_SET_NEW_PASSWORD),null)
                 }}}
-                //ContextCompat.startForegroundService(activity, Intent(action).setPackage(Modules.MODULE_ENGINE)) }}}
 
+        setup<Preference>(R.string.key_password_failures) {
+            if (Users.isOwner() && ! isDeviceOwner) return@setup remove(this)
+            setOnPreferenceClickListener { true.also {
+                    IslandSetup.setFailedPasswordAttempts(activity)
+            }}}
 
-
-
+        setup<Preference>(R.string.key_parent_password_failures) {
+            if (Users.isOwner() && ! isDeviceOwner) return@setup remove(this)
+            setOnPreferenceClickListener { true.also {
+                IslandSetup.setFailedParentPasswordAttempts(activity)
+            }}}
     }
 
     private fun setupPreferenceForManagingAppOps(key: Int, permission: String, op: Int, @StringRes prompt: Int, precondition: Boolean = true) {

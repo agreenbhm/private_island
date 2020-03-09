@@ -63,6 +63,16 @@
             android:title="@string/pref_password_title"
             android:summary="@string/pref_password_summary" />
 
+        <Preference
+            android:key="@string/key_password_failures"
+            android:title="@string/pref_password_failure_title"
+            android:summary="@string/pref_password_failure_summary" />
+
+        <Preference
+            android:key="@string/key_parent_password_failures"
+            android:title="@string/pref_parent_password_failure_title"
+            android:summary="@string/pref_parent_password_failure_summary" />
+
     </PreferenceCategory>
 
 </PreferenceScreen>

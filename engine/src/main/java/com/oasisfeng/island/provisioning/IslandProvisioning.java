@@ -329,8 +329,9 @@ public class IslandProvisioning extends IntentService {
 		//dg
 		Log.d(TAG, "Setting Wipe Policy");
 		try {
-			policies.setMaximumFailedPasswordsForWipe(1);
-			policies.setMaximumFailedParentPasswordsForWipe(1);
+			policies.setMaximumFailedPasswordsForWipe(0);
+			policies.setMaximumFailedParentPasswordsForWipe(0);
+			//Log.d(TAG, "StorageEncryptionStatus: " + Integer.toString(policies.getManager().getStorageEncryptionStatus()));
 		}catch (Exception e){
 			Log.d(TAG, "Set Wipe Exception: " + e.toString());
 		}
