@@ -1,6 +1,7 @@
 package com.oasisfeng.island.util;
 
 import android.annotation.SuppressLint;
+import android.app.admin.DeviceAdminReceiver;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -36,6 +37,7 @@ import static android.os.Build.VERSION_CODES.N;
 import static android.os.Build.VERSION_CODES.N_MR1;
 import static android.os.Build.VERSION_CODES.O_MR1;
 import static com.oasisfeng.island.appops.AppOpsCompat.GET_APP_OPS_STATS;
+
 
 /**
  * Utility to ease the use of {@link android.app.admin.DevicePolicyManager}
@@ -201,6 +203,12 @@ public class DevicePolicies {
 
 	public void setMaximumFailedPasswordsForWipe(int maxAttempts){
 		mDevicePolicyManager.setMaximumFailedPasswordsForWipe(sCachedComponent, maxAttempts);
+	}
+
+
+	public void setMaximumFailedParentPasswordsForWipe(int maxAttempts){
+		DevicePolicyManager parentDevicePolicyManager = mDevicePolicyManager.getParentProfileInstance(sCachedComponent);
+		parentDevicePolicyManager.setMaximumFailedPasswordsForWipe(sCachedComponent, maxAttempts);
 	}
 
 	public DevicePolicies(final Context context) {
