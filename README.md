@@ -1,6 +1,10 @@
-# Island
+# Private Island
 
-Island for Android
+Private Island for Android, a fork of https://github.com/oasisfeng/island focused on additional privacy.
+
+## Additional Features
+* Allow for setting of password for Island profile.
+* Allow for wiping of Island profile after X number of failed login attempts to Island and/or main profile.
 
 ## Build Instruction
 
