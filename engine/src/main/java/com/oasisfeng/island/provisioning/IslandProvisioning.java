@@ -331,13 +331,20 @@ public class IslandProvisioning extends IntentService {
 		try {
 			policies.setMaximumFailedPasswordsForWipe(0);
 			policies.setMaximumFailedParentPasswordsForWipe(0);
-			//Log.d(TAG, "StorageEncryptionStatus: " + Integer.toString(policies.getManager().getStorageEncryptionStatus()));
 		}catch (Exception e){
 			Log.d(TAG, "Set Wipe Exception: " + e.toString());
 		}
 		Log.d(TAG, "End Setting Wipe Policy");
 
-
+		Log.d(TAG, "Setting Clipboard Policy");
+		try {
+			policies.addUserRestrictionIfNeeded(context, UserManager.DISALLOW_CROSS_PROFILE_COPY_PASTE);
+			final SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+			prefs.edit().putBoolean("disallow-copy-paste", true).apply();
+		}catch (Exception e){
+			Log.d(TAG, "Set Clipboard Exception: " + e.toString());
+		}
+		Log.d(TAG, "End Clipboard Policy");
 
 		startDeviceAndProfileOwnerSharedPostProvisioning(context, policies);
 

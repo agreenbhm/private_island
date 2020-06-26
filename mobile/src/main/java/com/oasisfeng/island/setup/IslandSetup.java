@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.ProgressDialog;
 import android.app.admin.DevicePolicyManager;
+import android.bluetooth.BluetoothClass;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +16,7 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Process;
 import android.os.UserHandle;
+import android.os.UserManager;
 import android.provider.Settings;
 import android.text.InputType;
 import android.widget.EditText;
@@ -264,6 +266,13 @@ public class IslandSetup {
 		});
 		alertDialog.setNegativeButton("Cancel", null);
 		alertDialog.show();
+	}
+
+	public static void setClipboardSafety(final Activity activity, boolean enabled){
+		DevicePolicies dp = new DevicePolicies(activity);
+		dp.setUserRestriction(UserManager.DISALLOW_CROSS_PROFILE_COPY_PASTE, enabled);
+		dp.getClipboardSafetyPolicy(activity);
+
 	}
 
 	private static void deactivateDeviceOwner(final Activity activity) {

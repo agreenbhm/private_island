@@ -179,6 +179,7 @@ the sandbox environment. Island never collect data related to your privacy, plea
     <string name="pref_password_failure_summary">Set number of allowed password failures before profile wiped.</string>
     <string name="pref_parent_password_failure_title">Set Main Password Failures Before Wipe</string>
     <string name="pref_parent_password_failure_summary">Set number of allowed password failures before profile wiped.</string>
+    <string name="pref_disallow_copy_paste_summary">Disable copy/paste between profiles.</string>
 
     <string name="pref_device_owner_title">God mode</string>
     <string name="pref_device_owner_summary">A powerful mode with special privilege granted to Island. If activated, you can:\n\n</string>

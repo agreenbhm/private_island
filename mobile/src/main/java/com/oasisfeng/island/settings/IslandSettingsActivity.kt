@@ -18,6 +18,7 @@ import android.os.Build.VERSION_CODES.O
 import android.os.Build.VERSION_CODES.P
 import android.os.Bundle
 import android.preference.Preference
+import android.preference.SwitchPreference
 import android.preference.TwoStatePreference
 import android.util.Log
 import android.view.MenuItem
@@ -99,6 +100,16 @@ class IslandSettingsFragment: @Suppress("DEPRECATION") android.preference.Prefer
             setOnPreferenceClickListener { true.also {
                 IslandSetup.setFailedParentPasswordAttempts(activity)
             }}}
+
+        setup<SwitchPreference>(R.string.key_disallow_copy_paste){
+            if (Users.isOwner() && ! isDeviceOwner) return@setup remove(this)
+            setOnPreferenceChangeListener { _, enabled -> true.also {
+                Log.d("DG-Test", "toggle set to: " + enabled)
+                IslandSetup.setClipboardSafety(activity, enabled.toString().toBoolean())
+                }
+            }
+        }
+
     }
 
     private fun setupPreferenceForManagingAppOps(key: Int, permission: String, op: Int, @StringRes prompt: Int, precondition: Boolean = true) {
